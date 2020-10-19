@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "author": {
+    "name": "Nobuhiro Nakamura",
+    "url": "https://github.com/lefb766"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@yarnpkg/fslib": "^2.3.0",
+    "@yarnpkg/libzip": "^2.2.1"
+  }
+}
