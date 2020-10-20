@@ -15,7 +15,34 @@ const { createReadStreamFromBuffer } = require('./zipfs-readstream-impl');
     {
         console.log('PassThrough instance with end(buffer) then destroy():');
         const stream = new PassThrough();
-        setImmediate(() => { stream.end(buffer); stream.destroy(); });
+        setImmediate(() => {
+            stream.end(buffer);
+            stream.destroy();
+        });
+        await test(stream);
+    }
+
+    {
+        console.log('PassThrough instance with end(buffer) then destroy() async:');
+        const stream = new PassThrough();
+        setImmediate(() => {
+            stream.end(buffer);
+            setImmediate(() => {
+                stream.destroy();
+            });
+        });
+        await test(stream);
+    }
+
+    {
+        console.log('PassThrough instance with end(buffer) then destroy() 100ms later:');
+        const stream = new PassThrough();
+        setImmediate(() => {
+            stream.end(buffer);
+            setTimeout(() => {
+                stream.destroy();
+            }, 100);
+        });
         await test(stream);
     }
 
