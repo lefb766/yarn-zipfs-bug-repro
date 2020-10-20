@@ -29,6 +29,9 @@ const ZIP_PATH = '.yarn/cache/@yarnpkg-fslib-npm-2.3.0-177ea80af4-0969bd6b12.zip
                     console.log('NG');
                 }
             })
+
+            // Note that the stream emits finish because
+            // it is actually a PassThrough instance.
             stream.on('finish', () => {
                 console.log('finish');
             })
