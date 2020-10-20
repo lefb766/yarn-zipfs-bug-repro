@@ -6,14 +6,25 @@ const { createReadStreamFromBuffer } = require('./zipfs-readstream-impl');
     const filePath = require.resolve('@yarnpkg/fslib/lib/ZipFS.js');
     const buffer = fs.readFileSync(filePath);
 
-    console.log('Impl from ZipFS:');
-    const readStream = createReadStreamFromBuffer(buffer, filePath);
-    await test(readStream);
+    {
+        console.log('Impl from ZipFS:');
+        const readStream = createReadStreamFromBuffer(buffer, filePath);
+        await test(readStream);
+    }
 
-    console.log('PassThrough instance without member overwrite:');
-    const stream = new PassThrough();
-    setImmediate(() => stream.end(buffer));
-    await test(stream);
+    {
+        console.log('PassThrough instance with end(buffer) then destroy():');
+        const stream = new PassThrough();
+        setImmediate(() => { stream.end(buffer); stream.destroy(); });
+        await test(stream);
+    }
+
+    {
+        console.log('PassThrough instance with end(buffer):');
+        const stream = new PassThrough();
+        setImmediate(() => stream.end(buffer));
+        await test(stream);
+    }
 
     console.log('END');
 })();
