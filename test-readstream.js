@@ -27,7 +27,9 @@ function test(stream) {
         stream.on('close', () => {
             console.log('  close');
             if (!endEmitted) {
-                resolve();
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
             }
         });
         const piped = stream.pipe(nullStream());
