@@ -14,6 +14,8 @@ const { createReadStreamFromBuffer } = require('./zipfs-readstream-impl');
     const stream = new PassThrough();
     setImmediate(() => stream.end(buffer));
     await test(stream);
+
+    console.log('END');
 })();
 
 function test(stream) {
